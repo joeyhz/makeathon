@@ -67,6 +67,15 @@ BLYNK_WRITE(V0)
   } 
 }
 
+int autoDoor = 0;
+BLYNK_WRITE(V1)
+{
+  // Set incoming value from pin V0 to a variable
+  int value = param.asInt();
+
+  autoDoor = value;
+}
+
  
 
 // This function is called every time the device is connected to the Blynk.Cloud
@@ -125,6 +134,8 @@ void setup()
   dht.begin();
 
   doorServo.attach(35);
+  doorServo.write(90);
+  delay(500);
 
 }
  
@@ -154,9 +165,11 @@ void loop()
 
 
   // Actuate auto servos
-  if(bees > 20){
+  if(autoDoor && (bees > 20)){
     // open door
     doorServo.write(90);
+    delay(500);
+    Serial.println("auto door moved");
   }
 
   delay(500);
