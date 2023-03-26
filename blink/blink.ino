@@ -1,7 +1,12 @@
+#include <Servo.h>
+Servo s;
+
 void setup() {
   Serial.begin(9600);
   
   pinMode(4,INPUT);
+  s.attach(35);
+  s.write(90);
 }
 
 void loop() {
